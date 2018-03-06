@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" >  
+        <value>smtp.163.com</value>  
+       </property>  
+       <property name="port" >  
+        <value type="java.lang.Integer">465</value>  
+       </property>  
+       <property name="protocol">  
+        <value>smtps</value>  
+       </property>  
+       <property name="username">  
+        <value>username</value>  
+       </property>  
+       <property name="password">  
+        <value>password</value>  
+       </property>  
+       <!-- SMTP服务器验证 -->  
+       <property name="javaMailProperties">  
+           <props>  
+               <!-- 验证身份 -->  
+               <prop key="mail.smtps.auth">true</prop>  
+               <prop key="mail.smtp.ssl.enable">true</prop>  
+            <prop key="mail.transport.protocol">smtps</prop>  
+          </props>  
+       </property>  
+	</bean>	
+</beans>

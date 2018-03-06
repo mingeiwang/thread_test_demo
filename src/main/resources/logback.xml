@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- 使用说明：
+			需要修改的内容：
+				1.logBase:日志输出根路径，
+				2.appName:项目名称
+			可能修改的内容：
+				1.maxHistory:日志最大保留天数
+				2.maxFileSize:单个日志最大空间
+				3.totalSizeCap:当天总日志最大空间。注：当超过最大空间时，单个日志开始从头覆盖
+				4.all_maxHistory:日志最大保留天数
+				5.all_maxFileSize:单个日志最大空间
+				6.all_totalSizeCap:当天总日志最大空间。注：当超过最大空间时，单个日志开始从头覆盖
+				注意：所有日志文件和单独日志级别的文件文件设置不同
+				7.level:日志级别。
+					trace:显示所有日志，包括调试日志
+					debug:显示除了trace的日志。
+	 -->
+	<property name="logBase" value="/opt/logs" />
+	<property name="appName" value="thread_test" />
+	<property name="maxHistory" value="5" />
+	<property name="maxFileSize" value="2MB" />
+	<property name="totalSizeCap" value="20MB" />
+	<property name="all_maxHistory" value="10" />
+	<property name="all_maxFileSize" value="10MB" />
+	<property name="all_totalSizeCap" value="100MB" />  
+	<property name="level" value="DEBUG" />  
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %X{user} %-5level %logger{50} - %msg%n</Pattern>
+		</encoder>
+	</appender>
+	<appender name="log_info"  class="ch.qos.logback.core.rolling.RollingFileAppender">    
+		<!-- temp ：存放临时日志的文件夹 -->
+		<File>${logBase}/${appName}/temp/info.log</File>  
+		<append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> 
+            <!--日志文件输出的文件名--> 
+            <FileNamePattern>${logBase}/${appName}/%d{yyyy-MM-dd}/info.%i.log</FileNamePattern>  
+            <!--日志文件保留天数 日志最大空间，当日志最大空间时，重新开启一个新的空间，当数量大于totalSize/maxfileSize 后，日志开始覆盖 --> 
+            <maxFileSize>${maxFileSize}</maxFileSize>
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+            <maxHistory>${maxHistory}</maxHistory> 
+        </rollingPolicy>    
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">  
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %X{user} %-5level %logger{50} - %msg%n</pattern>    
+        	<charset>UTF-8</charset>
+        </encoder>  
+        <!-- 日志过滤 -->
+       <filter class="ch.qos.logback.classic.filter.LevelFilter">  
+            <level>INFO</level>  
+            <onMatch>ACCEPT</onMatch>  
+            <onMismatch>DENY</onMismatch>  
+        </filter>
+    </appender>
+    <appender name="log_error"  class="ch.qos.logback.core.rolling.RollingFileAppender">    
+		<File>${logBase}/${appName}/temp/error.log</File>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> 
+            <FileNamePattern>${logBase}/${appName}/%d{yyyy-MM-dd}/error.%i.log</FileNamePattern>  
+             <maxFileSize>${maxFileSize}</maxFileSize>
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+            <maxHistory>${maxHistory}</maxHistory> 
+        </rollingPolicy>    
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">  
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %X{user} %-5level %logger{50} - %msg%n</pattern>    
+        	<charset>UTF-8</charset>
+        </encoder>  
+       <filter class="ch.qos.logback.classic.filter.LevelFilter">  
+            <level>ERROR</level>  
+            <onMatch>ACCEPT</onMatch>  
+            <onMismatch>DENY</onMismatch>  
+        </filter>
+    </appender>
+     <appender name="log_debug"  class="ch.qos.logback.core.rolling.RollingFileAppender">    
+		<File>${logBase}/${appName}/temp/debug.log</File>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> 
+            <FileNamePattern>${logBase}/${appName}/%d{yyyy-MM-dd}/debug.%i.log</FileNamePattern>  
+             <maxFileSize>${maxFileSize}</maxFileSize>
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+            <maxHistory>${maxHistory}</maxHistory> 
+        </rollingPolicy>    
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">  
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %X{user} %-5level %logger{50} - %msg%n</pattern>    
+        	<charset>UTF-8</charset>
+        </encoder>  
+       <filter class="ch.qos.logback.classic.filter.LevelFilter">  
+            <level>DEBUG</level>  
+            <onMatch>ACCEPT</onMatch>  
+            <onMismatch>DENY</onMismatch>  
+        </filter>
+    </appender>
+    <appender name="log_warn"  class="ch.qos.logback.core.rolling.RollingFileAppender">    
+		<File>${logBase}/${appName}/temp/warn.log</File>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> 
+            <FileNamePattern>${logBase}/${appName}/%d{yyyy-MM-dd}/warn.%i.log</FileNamePattern>  
+             <maxFileSize>${maxFileSize}</maxFileSize>
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+            <maxHistory>${maxHistory}</maxHistory> 
+        </rollingPolicy>    
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">  
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %X{user} %-5level %logger{50} - %msg%n</pattern>    
+        	<charset>UTF-8</charset>
+        </encoder>  
+       <filter class="ch.qos.logback.classic.filter.LevelFilter">  
+            <level>WARN</level>  
+            <onMatch>ACCEPT</onMatch>  
+            <onMismatch>DENY</onMismatch>  
+        </filter>
+    </appender>
+    <appender name="log_trace"  class="ch.qos.logback.core.rolling.RollingFileAppender">    
+		<File>${logBase}/${appName}/temp/trace.log</File>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> 
+            <FileNamePattern>${logBase}/${appName}/%d{yyyy-MM-dd}/trace.%i.log</FileNamePattern>  
+             <maxFileSize>${maxFileSize}</maxFileSize>
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+            <maxHistory>${maxHistory}</maxHistory> 
+        </rollingPolicy>    
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">  
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %X{user} %-5level %logger{50} - %msg%n</pattern>    
+        	<charset>UTF-8</charset>
+        </encoder>  
+       <filter class="ch.qos.logback.classic.filter.LevelFilter">  
+            <level>TRACE</level>  
+            <onMatch>ACCEPT</onMatch>  
+            <onMismatch>DENY</onMismatch>  
+        </filter>
+    </appender>
+    <appender name="log_all"  class="ch.qos.logback.core.rolling.RollingFileAppender">    
+		<File>${logBase}/${appName}/temp/all.log</File>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> 
+            <FileNamePattern>${logBase}/${appName}/%d{yyyy-MM-dd}/all.%i.log</FileNamePattern>  
+             <maxFileSize>${maxFileSize}</maxFileSize>
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+            <maxHistory>${maxHistory}</maxHistory> 
+        </rollingPolicy>    
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">  
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %X{user} %-5level %logger{50} - %msg%n</pattern>    
+        	<charset>UTF-8</charset>
+        </encoder>  
+    </appender>  
+    <root>
+    	<level value="${level}" />
+    	<appender-ref ref="STDOUT" />
+		<appender-ref ref="log_info" />
+		<appender-ref ref="log_error"/>
+		<appender-ref ref="log_debug"/>
+		<appender-ref ref="log_warn"/>
+		<appender-ref ref="log_trace"/>
+		<appender-ref ref="log_all"/>
+    </root>
+</configuration>
