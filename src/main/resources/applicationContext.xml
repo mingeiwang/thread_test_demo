@@ -13,8 +13,8 @@
 	http://www.springframework.org/schema/cache  http://www.springframework.org/schema/cache/spring-cache-4.0.xsd"
 	default-lazy-init="true">
 	
-	<context:component-scan base-package="com.print.kuaidi.service" />
-	<context:component-scan base-package="com.print.kuaidi.dao" />
+	<context:component-scan base-package="com.thread.demo.service" />
+	<context:component-scan base-package="com.thread.demo.dao" />
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     <!-- 支持异步方法执行 -->
     <task:annotation-driven /> 
@@ -41,9 +41,9 @@
 	<!-- jdbcSql -->
 	<bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource"  
         destroy-method="close">  
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/kuaidi_print?characterEncoding=UTF-8" />  
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/thread_demo?characterEncoding=UTF-8" />  
         <property name="username" value="root" />  
-        <property name="password" value="147852369" />  
+        <property name="password" value="wangming1475" />  
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />  
         <property name="filters" value="stat" />  
   
@@ -67,7 +67,7 @@
 		<property name="dataSource" ref="druidDataSource" />
 		<property name="packagesToScan">
 			<list>
-				<value>com.print.kuaidi.entity</value>
+				<value>com.thread.demo.entity</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -119,7 +119,7 @@
 
 	<aop:config proxy-target-class="true">
 		<aop:advisor advice-ref="txAdvice"
-			pointcut="execution(* com.print.kuaidi.service..*.*(..))" />
+			pointcut="execution(* com.thread.demo.service..*.*(..))" />
 	</aop:config>
 	
 	<!-- aop -->
@@ -134,5 +134,4 @@
 	</aop:config>
 	<!-- Spring中引入其他配置文件 -->
     <import resource="classpath*:/spring-mail.xml" />
-    <import resource="classpath*:/spring-weixin.xml" />
 </beans>
