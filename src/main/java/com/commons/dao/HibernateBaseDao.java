@@ -103,7 +103,8 @@ public abstract class HibernateBaseDao<T,ID extends Serializable>{
      * @param u
      */
     public void update(T u) {
-        this.hibernateTemplate.update(u);  
+        this.hibernateTemplate.update(u);
+        flush();
     }  
   
     /**
@@ -202,6 +203,10 @@ public abstract class HibernateBaseDao<T,ID extends Serializable>{
     	query.setMaxResults(count);
     	query.setFirstResult(startIndex);
     	return query.list();
+    }
+    
+    public void flush(){
+    	this.hibernateTemplate.flush();
     }
   
     
